@@ -3,13 +3,14 @@ import { Download } from "lucide-react";
 import { profile } from "@/lib/data/profile";
 import { imageExists } from "@/lib/image-exists";
 import { SectionHeading } from "@/components/section-heading";
+import { Reveal } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
 
 export function Resume() {
   const hasResume = imageExists(profile.resumePdfPath);
 
   return (
-    <section id="resume" className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
+    <Reveal id="resume" className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
       <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
         <SectionHeading eyebrow="Full Details" title="Resume" />
         {hasResume && (
@@ -23,7 +24,7 @@ export function Resume() {
         )}
       </div>
 
-      <div className="overflow-hidden rounded-lg border border-border bg-muted/30">
+      <div className="overflow-hidden rounded-lg border border-primary/15 bg-muted/30">
         {hasResume ? (
           <object
             data={profile.resumePdfPath}
@@ -55,6 +56,6 @@ export function Resume() {
           </div>
         )}
       </div>
-    </section>
+    </Reveal>
   );
 }

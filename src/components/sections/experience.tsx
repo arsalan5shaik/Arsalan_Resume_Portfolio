@@ -1,23 +1,31 @@
 import { experience } from "@/lib/data/experience";
 import { SectionHeading } from "@/components/section-heading";
+import { Reveal } from "@/components/motion/reveal";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 export function Experience() {
   return (
-    <section id="experience" className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
+    <Reveal id="experience" className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
       <SectionHeading eyebrow="Career" title="Work Experience" />
 
       <div className="flex flex-col gap-6">
         {experience.map((job) => (
-          <Card key={`${job.company}-${job.startDate}`}>
-            <CardHeader className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
+          <Card
+            key={`${job.company}-${job.startDate}`}
+            className="transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5"
+          >
+            <CardHeader className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
               <div>
                 <h3 className="text-lg font-semibold">{job.role}</h3>
-                <p className="text-muted-foreground">{job.company}</p>
+                <p className="text-primary">{job.company}</p>
               </div>
-              <p className="text-sm text-muted-foreground">
+              <Badge
+                variant="outline"
+                className="w-fit border-primary/20 bg-primary/5 text-xs text-muted-foreground"
+              >
                 {job.startDate} – {job.endDate}
-              </p>
+              </Badge>
             </CardHeader>
             <CardContent>
               <ul className="list-disc space-y-2 pl-5 text-sm leading-relaxed text-foreground/90">
@@ -29,6 +37,6 @@ export function Experience() {
           </Card>
         ))}
       </div>
-    </section>
+    </Reveal>
   );
 }

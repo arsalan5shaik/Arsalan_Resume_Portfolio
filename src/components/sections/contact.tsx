@@ -3,6 +3,7 @@ import { FaGithub, FaLinkedin } from "react-icons/fa6";
 
 import { profile } from "@/lib/data/profile";
 import { SectionHeading } from "@/components/section-heading";
+import { Reveal } from "@/components/motion/reveal";
 import { Card, CardContent } from "@/components/ui/card";
 
 const links = [
@@ -34,7 +35,7 @@ const links = [
 
 export function Contact() {
   return (
-    <section id="contact" className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
+    <Reveal id="contact" className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
       <SectionHeading eyebrow="Get In Touch" title="Contact" />
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -44,8 +45,8 @@ export function Contact() {
             typeof link.value === "function" ? link.value(profile) : link.value;
           const content = (
             <CardContent className="flex items-center gap-3">
-              <div className="flex size-9 shrink-0 items-center justify-center rounded-md bg-muted">
-                <Icon className="size-4" />
+              <div className="flex size-9 shrink-0 items-center justify-center rounded-md bg-primary/10">
+                <Icon className="size-4 text-primary" />
               </div>
               <div className="min-w-0">
                 <p className="text-xs text-muted-foreground">{link.label}</p>
@@ -65,11 +66,13 @@ export function Contact() {
               target={link.label === "Email" ? undefined : "_blank"}
               rel="noopener noreferrer"
             >
-              <Card className="transition-colors hover:bg-muted/50">{content}</Card>
+              <Card className="transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5">
+                {content}
+              </Card>
             </a>
           );
         })}
       </div>
-    </section>
+    </Reveal>
   );
 }

@@ -50,11 +50,13 @@ export interface Certification {
   image?: string;
 }
 
-export interface Hackathon {
+export interface Event {
   name: string;
+  // e.g. "Hackathon", "Conference", "Meetup", "Workshop"
+  type?: string;
   date?: string;
   location?: string;
-  project: string;
+  project?: string;
   description: string;
   result?: string;
   image?: string;

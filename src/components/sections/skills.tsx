@@ -1,10 +1,11 @@
 import { skills } from "@/lib/data/skills";
 import { SectionHeading } from "@/components/section-heading";
+import { Reveal } from "@/components/motion/reveal";
 import { Badge } from "@/components/ui/badge";
 
 export function Skills() {
   return (
-    <section id="skills" className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
+    <Reveal id="skills" className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
       <SectionHeading eyebrow="Toolbox" title="Skills" />
 
       <div className="flex flex-col gap-5">
@@ -15,7 +16,11 @@ export function Skills() {
             </p>
             <div className="flex flex-wrap gap-1.5">
               {group.items.map((item) => (
-                <Badge key={item} variant="outline">
+                <Badge
+                  key={item}
+                  variant="outline"
+                  className="border-primary/20 bg-primary/5 text-primary transition-colors hover:bg-primary/10"
+                >
                   {item}
                 </Badge>
               ))}
@@ -23,6 +28,6 @@ export function Skills() {
           </div>
         ))}
       </div>
-    </section>
+    </Reveal>
   );
 }

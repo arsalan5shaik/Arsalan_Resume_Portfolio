@@ -1,4 +1,4 @@
-import { hackathons } from "@/lib/data/hackathons";
+import { events } from "@/lib/data/events";
 
 export interface NavItem {
   label: string;
@@ -11,9 +11,7 @@ export const navItems: NavItem[] = [
   { label: "Projects", href: "#projects" },
   { label: "Skills", href: "#skills" },
   { label: "Certifications", href: "#certifications" },
-  ...(hackathons.length > 0
-    ? [{ label: "Hackathons", href: "#hackathons" }]
-    : []),
+  ...(events.length > 0 ? [{ label: "Events", href: "#events" }] : []),
   { label: "Education", href: "#education" },
   { label: "Contact", href: "#contact" },
 ];
