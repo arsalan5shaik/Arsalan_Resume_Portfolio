@@ -9,7 +9,14 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
+  --font-heading: var(--font-display);
+  --font-display: var(--font-display);
+  --color-stage-bg: var(--stage-bg);
+  --color-stage-bg-soft: var(--stage-bg-soft);
+  --color-stage-foreground: var(--stage-foreground);
+  --color-stage-muted: var(--stage-muted);
+  --color-stage-border: var(--stage-border);
+  --color-stage-accent: var(--stage-accent);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -55,7 +62,7 @@
   --card-foreground: oklch(0.16 0.014 286);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.16 0.014 286);
-  --primary: oklch(0.541 0.229 293.01);
+  --primary: oklch(0.565 0.255 291.5);
   --primary-foreground: oklch(0.985 0.01 293);
   --secondary: oklch(0.967 0.006 286);
   --secondary-foreground: oklch(0.21 0.02 286);
@@ -66,8 +73,8 @@
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.9 0.012 286);
   --input: oklch(0.9 0.012 286);
-  --ring: oklch(0.606 0.25 292.72);
-  --chart-1: oklch(0.541 0.229 293.01);
+  --ring: oklch(0.63 0.26 291.5);
+  --chart-1: oklch(0.565 0.255 291.5);
   --chart-2: oklch(0.585 0.233 277.12);
   --chart-3: oklch(0.715 0.143 215.22);
   --chart-4: oklch(0.696 0.17 162.48);
@@ -75,12 +82,23 @@
   --radius: 0.625rem;
   --sidebar: oklch(0.985 0.006 286);
   --sidebar-foreground: oklch(0.16 0.014 286);
-  --sidebar-primary: oklch(0.541 0.229 293.01);
+  --sidebar-primary: oklch(0.565 0.255 291.5);
   --sidebar-primary-foreground: oklch(0.985 0.01 293);
   --sidebar-accent: oklch(0.94 0.035 292);
   --sidebar-accent-foreground: oklch(0.32 0.15 293);
   --sidebar-border: oklch(0.9 0.012 286);
-  --sidebar-ring: oklch(0.606 0.25 292.72);
+  --sidebar-ring: oklch(0.63 0.26 291.5);
+
+  /* Fixed "stage" tokens for the hero — deliberately independent of the
+     light/dark toggle so the hero always reads as a dramatic dark panel. */
+  --stage-bg: oklch(0.16 0.025 291);
+  --stage-bg-soft: oklch(0.21 0.03 291);
+  --stage-foreground: oklch(0.97 0.01 291);
+  --stage-muted: oklch(0.72 0.03 291);
+  --stage-border: oklch(1 0 0 / 10%);
+  --stage-accent: oklch(0.72 0.19 291);
+  --stage-accent-from: oklch(0.62 0.26 291);
+  --stage-accent-to: oklch(0.75 0.19 350);
 }
 
 .dark {
@@ -90,7 +108,7 @@
   --card-foreground: oklch(0.97 0.006 286);
   --popover: oklch(0.205 0.014 286);
   --popover-foreground: oklch(0.97 0.006 286);
-  --primary: oklch(0.702 0.19 293.01);
+  --primary: oklch(0.73 0.21 293.01);
   --primary-foreground: oklch(0.15 0.03 293);
   --secondary: oklch(0.26 0.016 286);
   --secondary-foreground: oklch(0.97 0.006 286);
@@ -101,20 +119,20 @@
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.702 0.19 293.01);
-  --chart-1: oklch(0.702 0.19 293.01);
+  --ring: oklch(0.73 0.21 293.01);
+  --chart-1: oklch(0.73 0.21 293.01);
   --chart-2: oklch(0.673 0.182 277.12);
   --chart-3: oklch(0.75 0.13 215.22);
   --chart-4: oklch(0.74 0.15 162.48);
   --chart-5: oklch(0.8 0.16 70.08);
   --sidebar: oklch(0.205 0.014 286);
   --sidebar-foreground: oklch(0.97 0.006 286);
-  --sidebar-primary: oklch(0.702 0.19 293.01);
+  --sidebar-primary: oklch(0.73 0.21 293.01);
   --sidebar-primary-foreground: oklch(0.15 0.03 293);
   --sidebar-accent: oklch(0.3 0.07 293);
   --sidebar-accent-foreground: oklch(0.9 0.05 293);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.702 0.19 293.01);
+  --sidebar-ring: oklch(0.73 0.21 293.01);
 }
 
 @layer base {
@@ -126,5 +144,28 @@
   }
   html {
     @apply font-sans scroll-smooth;
+  }
+}
+
+/* Dependency-free film-grain overlay: an SVG feTurbulence filter blended
+   over the whole viewport. Subtle at this opacity, adds texture instead of
+   the page reading as flat, digital-only. */
+.grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.045;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
   }
 }

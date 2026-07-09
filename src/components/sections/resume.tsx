@@ -2,6 +2,7 @@ import { Download } from "lucide-react";
 
 import { profile } from "@/lib/data/profile";
 import { imageExists } from "@/lib/image-exists";
+import { sectionIndex } from "@/lib/section-order";
 import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
@@ -12,7 +13,11 @@ export function Resume() {
   return (
     <Reveal id="resume" className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
       <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
-        <SectionHeading eyebrow="Full Details" title="Resume" />
+        <SectionHeading
+          index={sectionIndex("resume")}
+          eyebrow="Full Details"
+          title="Resume"
+        />
         {hasResume && (
           <Button
             nativeButton={false}

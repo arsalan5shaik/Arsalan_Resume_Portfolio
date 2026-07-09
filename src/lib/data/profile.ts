@@ -1,11 +1,12 @@
 import { Profile } from "@/lib/types";
 
-// TODO: replace bio with your own voice, and drop a headshot at
-// public/images/profile/avatar.jpg
+// TODO: swap in your own voice if this doesn't sound like you, and drop a
+// headshot at public/images/profile/avatar.jpg
 export const profile: Profile = {
   name: "Arsalan Shaik",
   title: "Software Engineer & AI Engineer",
-  bio: "Computer Science student at UT Dallas graduating December 2026, with internship experience building LLM-powered automation at Staples and large-scale data pipelines at Intuit. Interested in AI/ML systems, backend engineering, and shipping software that holds up in production.",
+  tagline: "I teach machines to be less annoying.",
+  bio: "CS student at UT Dallas (graduating Dec 2026), most recently building LLM-powered automation at Staples and wrangling large-scale data pipelines at Intuit. I like the unglamorous parts of AI/ML — the inference layer, the pipeline that has to run at 3am, the prompt that has to hold up in production, not just in a notebook.",
   location: "Dallas, TX",
   email: "Arsalan27shaik@gmail.com",
   githubUrl: "https://github.com/arsalan5shaik",

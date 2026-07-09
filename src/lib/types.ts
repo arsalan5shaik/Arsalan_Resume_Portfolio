@@ -1,6 +1,7 @@
 export interface Profile {
   name: string;
   title: string;
+  tagline: string;
   bio: string;
   location: string;
   email: string;
@@ -40,6 +41,7 @@ export interface Project {
   liveUrl?: string;
   repoUrl?: string;
   featured?: boolean;
+  stat?: { value: string; label: string };
 }
 
 export interface Certification {

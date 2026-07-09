@@ -26,6 +26,7 @@ export const projects: Project[] = [
     ],
     image: "/images/projects/traffic-sign-recognition.png",
     featured: true,
+    stat: { value: "95%", label: "classification accuracy" },
   },
   {
     slug: "restaurant-recommendation-app",

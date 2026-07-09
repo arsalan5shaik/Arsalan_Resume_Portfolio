@@ -2,6 +2,7 @@ import { Mail, MapPin } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa6";
 
 import { profile } from "@/lib/data/profile";
+import { sectionIndex } from "@/lib/section-order";
 import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/motion/reveal";
 import { Card, CardContent } from "@/components/ui/card";
@@ -36,7 +37,7 @@ const links = [
 export function Contact() {
   return (
     <Reveal id="contact" className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
-      <SectionHeading eyebrow="Get In Touch" title="Contact" />
+      <SectionHeading index={sectionIndex("contact")} eyebrow="Get In Touch" title="Contact" />
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {links.map((link) => {

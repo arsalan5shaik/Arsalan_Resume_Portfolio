@@ -3,6 +3,7 @@ import { Award, ExternalLink } from "lucide-react";
 
 import { certifications } from "@/lib/data/certifications";
 import { imageExists } from "@/lib/image-exists";
+import { sectionIndex } from "@/lib/section-order";
 import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/motion/reveal";
 import { Card, CardContent } from "@/components/ui/card";
@@ -10,7 +11,11 @@ import { Card, CardContent } from "@/components/ui/card";
 export function Certifications() {
   return (
     <Reveal id="certifications" className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
-      <SectionHeading eyebrow="Credentials" title="Certifications" />
+      <SectionHeading
+        index={sectionIndex("certifications")}
+        eyebrow="Credentials"
+        title="Certifications"
+      />
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {certifications.map((cert) => {

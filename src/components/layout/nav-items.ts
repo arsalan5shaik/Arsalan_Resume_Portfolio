@@ -1,4 +1,4 @@
-import { events } from "@/lib/data/events";
+import { allSections } from "@/lib/section-order";
 
 export interface NavItem {
   label: string;
@@ -7,11 +7,7 @@ export interface NavItem {
 
 export const navItems: NavItem[] = [
   { label: "About", href: "#about" },
-  { label: "Experience", href: "#experience" },
-  { label: "Projects", href: "#projects" },
-  { label: "Skills", href: "#skills" },
-  { label: "Certifications", href: "#certifications" },
-  ...(events.length > 0 ? [{ label: "Events", href: "#events" }] : []),
-  { label: "Education", href: "#education" },
-  { label: "Contact", href: "#contact" },
+  ...allSections
+    .filter((section) => section.id !== "resume")
+    .map((section) => ({ label: section.label, href: `#${section.id}` })),
 ];
