@@ -117,7 +117,6 @@ export function ProjectCarousel({ projects }: { projects: CarouselProject[] }) {
         role="region"
         aria-label="Projects, scroll or use the arrow keys to browse"
         tabIndex={0}
-        data-cursor-hover
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}

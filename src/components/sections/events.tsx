@@ -14,7 +14,11 @@ export function Events() {
 
   return (
     <Reveal id="events" className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
-      <SectionHeading index={sectionIndex("events")} eyebrow="Builder Mode" title="Events" />
+      <SectionHeading
+        index={sectionIndex("events")}
+        eyebrow="Builder Mode"
+        title="Recent Events"
+      />
 
       <div className="grid gap-6 sm:grid-cols-2">
         {events.map((event) => {

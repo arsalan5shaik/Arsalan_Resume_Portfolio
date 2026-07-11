@@ -13,7 +13,7 @@ export const allSections: SectionMeta[] = [
   { id: "projects", label: "Projects" },
   { id: "skills", label: "Skills" },
   { id: "certifications", label: "Certifications" },
-  ...(events.length > 0 ? [{ id: "events", label: "Events" }] : []),
+  ...(events.length > 0 ? [{ id: "events", label: "Recent Events" }] : []),
   { id: "education", label: "Education" },
   { id: "contact", label: "Contact" },
 ];
