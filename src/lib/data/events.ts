@@ -17,10 +17,9 @@ export const events: Event[] = [
     name: "HackUTD",
     type: "Hackathon",
     location: "Richardson, TX",
+    image: "/images/events/hackutd.png",
     // TODO: fill in the year, what you built, team size, and any result —
-    // placeholder for now so the section renders. Add a small logo at
-    // public/images/events/hackutd.png if you have one (renders as a thumb,
-    // same treatment as certifications — not a full banner photo).
+    // placeholder for now so the section renders.
     description:
       "UT Dallas's flagship student hackathon. Details on what I built here coming soon.",
   },
