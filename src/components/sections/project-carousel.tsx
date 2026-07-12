@@ -27,7 +27,7 @@ export function ProjectCarousel({ projects }: { projects: CarouselProject[] }) {
         tabIndex={0}
         {...trackHandlers}
         className={cn(
-          "flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2 sm:max-w-xl lg:max-w-2xl [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden",
+          "relative flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2 sm:max-w-xl lg:max-w-2xl [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden",
           dragging ? "cursor-grabbing select-none scroll-auto" : "cursor-grab scroll-smooth"
         )}
       >
