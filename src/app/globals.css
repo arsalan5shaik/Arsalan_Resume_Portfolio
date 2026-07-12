@@ -2,8 +2,6 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-@custom-variant dark (&:is(.dark *));
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -89,8 +87,8 @@
   --sidebar-border: oklch(0.84 0.032 291);
   --sidebar-ring: oklch(0.63 0.26 291.5);
 
-  /* Fixed "stage" tokens for the hero — deliberately independent of the
-     light/dark toggle so the hero always reads as a dramatic dark panel. */
+  /* Fixed "stage" tokens for the hero — always this dark panel look,
+     independent of everything else being light-mode only. */
   --stage-bg: oklch(0.16 0.045 291);
   --stage-bg-soft: oklch(0.21 0.055 291);
   --stage-foreground: oklch(0.97 0.01 291);
@@ -99,40 +97,6 @@
   --stage-accent: oklch(0.72 0.19 291);
   --stage-accent-from: oklch(0.62 0.26 291);
   --stage-accent-to: oklch(0.75 0.19 350);
-}
-
-.dark {
-  --background: oklch(0.26 0.052 291);
-  --foreground: oklch(0.97 0.01 291);
-  --card: oklch(0.31 0.058 291);
-  --card-foreground: oklch(0.97 0.01 291);
-  --popover: oklch(0.31 0.058 291);
-  --popover-foreground: oklch(0.97 0.01 291);
-  --primary: oklch(0.73 0.21 293.01);
-  --primary-foreground: oklch(0.15 0.03 293);
-  --secondary: oklch(0.37 0.052 291);
-  --secondary-foreground: oklch(0.97 0.01 291);
-  --muted: oklch(0.37 0.052 291);
-  --muted-foreground: oklch(0.78 0.032 291);
-  --accent: oklch(0.42 0.1 291);
-  --accent-foreground: oklch(0.9 0.05 293);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 14%);
-  --input: oklch(1 0 0 / 17%);
-  --ring: oklch(0.73 0.21 293.01);
-  --chart-1: oklch(0.73 0.21 293.01);
-  --chart-2: oklch(0.673 0.182 277.12);
-  --chart-3: oklch(0.75 0.13 215.22);
-  --chart-4: oklch(0.74 0.15 162.48);
-  --chart-5: oklch(0.8 0.16 70.08);
-  --sidebar: oklch(0.31 0.058 291);
-  --sidebar-foreground: oklch(0.97 0.01 291);
-  --sidebar-primary: oklch(0.73 0.21 293.01);
-  --sidebar-primary-foreground: oklch(0.15 0.03 293);
-  --sidebar-accent: oklch(0.42 0.1 291);
-  --sidebar-accent-foreground: oklch(0.9 0.05 293);
-  --sidebar-border: oklch(1 0 0 / 14%);
-  --sidebar-ring: oklch(0.73 0.21 293.01);
 }
 
 @layer base {

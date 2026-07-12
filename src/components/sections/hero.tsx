@@ -37,8 +37,7 @@ export function Hero() {
 
         <StaggerGroup className="relative flex flex-col gap-12 px-6 py-10 sm:px-10 sm:py-14 lg:flex-row lg:items-center lg:gap-16 lg:py-20">
           <div className="flex-1">
-            <StaggerItem className="flex flex-wrap items-center justify-between gap-2 font-mono text-xs uppercase tracking-widest text-stage-muted">
-              <span>00 — {profile.title}</span>
+            <StaggerItem className="font-mono text-xs uppercase tracking-widest text-stage-muted">
               <span>{profile.location}</span>
             </StaggerItem>
 

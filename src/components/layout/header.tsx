@@ -8,7 +8,6 @@ import { Menu } from "lucide-react";
 import { profile } from "@/lib/data/profile";
 import { navItems } from "@/components/layout/nav-items";
 import { useActiveSection } from "@/components/layout/use-active-section";
-import { ModeToggle } from "@/components/layout/mode-toggle";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
@@ -62,8 +61,6 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-1">
-          <ModeToggle />
-
           <div className="md:hidden">
             <Sheet>
               <SheetTrigger

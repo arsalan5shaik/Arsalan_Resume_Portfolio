@@ -5,7 +5,6 @@ import "./globals.css";
 import { profile } from "@/lib/data/profile";
 import { education } from "@/lib/data/education";
 import { siteUrl } from "@/lib/site-config";
-import { ThemeProvider } from "@/components/layout/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
@@ -63,11 +62,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={`${geistMono.variable} h-full antialiased grain`}
-    >
+    <html lang="en" className={`${geistMono.variable} h-full antialiased grain`}>
       <head>
         <script
           type="application/ld+json"
@@ -75,20 +70,13 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <TooltipProvider>
-            <Header />
-            <main id="top" className="flex-1">
-              {children}
-            </main>
-            <Footer />
-          </TooltipProvider>
-        </ThemeProvider>
+        <TooltipProvider>
+          <Header />
+          <main id="top" className="flex-1">
+            {children}
+          </main>
+          <Footer />
+        </TooltipProvider>
       </body>
     </html>
   );

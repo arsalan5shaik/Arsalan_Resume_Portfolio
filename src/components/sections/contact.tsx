@@ -50,7 +50,7 @@ export function Contact() {
               </div>
               <div className="min-w-0">
                 <p className="text-xs text-muted-foreground">{link.label}</p>
-                <p className="truncate text-sm font-medium">{display}</p>
+                <p className="break-words text-sm font-medium">{display}</p>
               </div>
             </CardContent>
           );
