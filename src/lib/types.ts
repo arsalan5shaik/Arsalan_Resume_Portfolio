@@ -19,6 +19,7 @@ export interface Education {
   gpa?: string;
   graduationDate: string;
   coursework?: string[];
+  logo?: string;
 }
 
 export interface Experience {

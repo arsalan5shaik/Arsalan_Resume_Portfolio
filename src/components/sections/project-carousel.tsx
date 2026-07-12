@@ -1,114 +1,22 @@
 "use client";
 
-import * as React from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import { FaGithub } from "react-icons/fa6";
 
 import { Project } from "@/lib/types";
+import { useCarousel } from "@/components/motion/use-carousel";
+import { CarouselControls } from "@/components/motion/carousel-controls";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 export type CarouselProject = Project & { hasImage: boolean };
 
-// Each card's *achievable* scroll target — offsetLeft clamped to the track's
-// actual max scrollLeft. With a wide peek and few cards, the browser can't
-// scroll far enough right to reach the last card's raw offsetLeft, so
-// comparing against unclamped values picks the wrong "closest" card once
-// scrollLeft is pinned at the end.
-function cardScrollTargets(track: HTMLElement): number[] {
-  const maxScroll = track.scrollWidth - track.clientWidth;
-  return Array.from(track.children).map((child) =>
-    Math.min((child as HTMLElement).offsetLeft, maxScroll)
-  );
-}
-
-function closestCardIndex(track: HTMLElement): number {
-  const targets = cardScrollTargets(track);
-  let closest = 0;
-  let minDist = Infinity;
-  targets.forEach((target, i) => {
-    const dist = Math.abs(target - track.scrollLeft);
-    if (dist < minDist) {
-      minDist = dist;
-      closest = i;
-    }
-  });
-  return closest;
-}
-
 export function ProjectCarousel({ projects }: { projects: CarouselProject[] }) {
-  const trackRef = React.useRef<HTMLDivElement>(null);
-  const dragState = React.useRef<{ startX: number; startScroll: number } | null>(null);
-  const [activeIndex, setActiveIndex] = React.useState(0);
-  const [dragging, setDragging] = React.useState(false);
-
-  const scrollToIndex = React.useCallback((index: number) => {
-    const track = trackRef.current;
-    if (!track) return;
-    const clamped = Math.max(0, Math.min(index, projects.length - 1));
-    const targets = cardScrollTargets(track);
-    track.scrollTo({ left: targets[clamped], behavior: "smooth" });
-  }, [projects.length]);
-
-  React.useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-    let ticking = false;
-
-    function updateActive() {
-      ticking = false;
-      const el = trackRef.current;
-      if (!el) return;
-      setActiveIndex(closestCardIndex(el));
-    }
-
-    function onScroll() {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(updateActive);
-      }
-    }
-
-    const initialFrame = requestAnimationFrame(updateActive);
-    track.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      cancelAnimationFrame(initialFrame);
-      track.removeEventListener("scroll", onScroll);
-    };
-  }, []);
-
-  function onPointerDown(e: React.PointerEvent<HTMLDivElement>) {
-    if (e.pointerType !== "mouse") return;
-    const track = trackRef.current;
-    if (!track) return;
-    dragState.current = { startX: e.clientX, startScroll: track.scrollLeft };
-    track.setPointerCapture(e.pointerId);
-    setDragging(true);
-  }
-  function onPointerMove(e: React.PointerEvent<HTMLDivElement>) {
-    if (!dragState.current) return;
-    const track = trackRef.current;
-    if (!track) return;
-    track.scrollLeft = dragState.current.startScroll - (e.clientX - dragState.current.startX);
-  }
-  function onPointerUp(e: React.PointerEvent<HTMLDivElement>) {
-    if (!dragState.current) return;
-    dragState.current = null;
-    setDragging(false);
-    trackRef.current?.releasePointerCapture(e.pointerId);
-  }
-
-  function onKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
-    if (e.key === "ArrowRight") {
-      e.preventDefault();
-      scrollToIndex(activeIndex + 1);
-    } else if (e.key === "ArrowLeft") {
-      e.preventDefault();
-      scrollToIndex(activeIndex - 1);
-    }
-  }
+  const { trackRef, activeIndex, dragging, scrollToIndex, trackHandlers } = useCarousel(
+    projects.length
+  );
 
   return (
     <div>
@@ -117,11 +25,7 @@ export function ProjectCarousel({ projects }: { projects: CarouselProject[] }) {
         role="region"
         aria-label="Projects, scroll or use the arrow keys to browse"
         tabIndex={0}
-        onPointerDown={onPointerDown}
-        onPointerMove={onPointerMove}
-        onPointerUp={onPointerUp}
-        onPointerLeave={onPointerUp}
-        onKeyDown={onKeyDown}
+        {...trackHandlers}
         className={cn(
           "flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2 sm:max-w-xl lg:max-w-2xl [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden",
           dragging ? "cursor-grabbing select-none scroll-auto" : "cursor-grab scroll-smooth"
@@ -213,42 +117,14 @@ export function ProjectCarousel({ projects }: { projects: CarouselProject[] }) {
         ))}
       </div>
 
-      <div className="mt-6 flex items-center justify-between gap-4">
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            aria-label="Previous project"
-            onClick={() => scrollToIndex(activeIndex - 1)}
-            disabled={activeIndex === 0}
-            className="flex size-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-primary/30 hover:text-primary disabled:pointer-events-none disabled:opacity-30"
-          >
-            <ChevronLeft className="size-4" />
-          </button>
-          <button
-            type="button"
-            aria-label="Next project"
-            onClick={() => scrollToIndex(activeIndex + 1)}
-            disabled={activeIndex === projects.length - 1}
-            className="flex size-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-primary/30 hover:text-primary disabled:pointer-events-none disabled:opacity-30"
-          >
-            <ChevronRight className="size-4" />
-          </button>
-        </div>
-
-        <div className="flex flex-1 items-center gap-3">
-          <div className="h-1 flex-1 overflow-hidden rounded-full bg-muted">
-            <div
-              className="h-full rounded-full bg-primary transition-[width] duration-300 ease-out"
-              style={{
-                width: `${((activeIndex + 1) / projects.length) * 100}%`,
-              }}
-            />
-          </div>
-          <p className="shrink-0 font-mono text-xs tabular-nums text-muted-foreground">
-            {String(activeIndex + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
-          </p>
-        </div>
-      </div>
+      <CarouselControls
+        activeIndex={activeIndex}
+        total={projects.length}
+        onPrev={() => scrollToIndex(activeIndex - 1)}
+        onNext={() => scrollToIndex(activeIndex + 1)}
+        prevLabel="Previous project"
+        nextLabel="Next project"
+      />
     </div>
   );
 }

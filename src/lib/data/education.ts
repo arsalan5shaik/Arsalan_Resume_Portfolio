@@ -1,5 +1,7 @@
 import { Education } from "@/lib/types";
 
+// Add a school logo at public/images/education/utd.png and set
+// logo: "/images/education/utd.png" (optional — falls back to a generic icon).
 export const education: Education = {
   school: "The University of Texas at Dallas",
   location: "Richardson, TX",

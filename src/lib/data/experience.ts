@@ -1,6 +1,8 @@
 import { Experience } from "@/lib/types";
 
-// Add a logo per role at public/images/profile/ if you want one (optional).
+// Add a company logo per role at public/images/experience/<company>.png and
+// set logo: "/images/experience/<company>.png" (optional — falls back to a
+// generic icon).
 export const experience: Experience[] = [
   {
     company: "Staples",
