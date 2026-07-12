@@ -1,1 +1,1 @@
-export const siteUrl = "https://arsalanshaik.dev"; // TODO: update once you have a domain
+export const siteUrl = "https://shaik-arsalan-resume-portfolio.vercel.app"; // TODO: update if you connect a custom domain
