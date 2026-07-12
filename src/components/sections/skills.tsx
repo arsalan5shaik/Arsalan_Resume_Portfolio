@@ -1,5 +1,4 @@
 import { skills } from "@/lib/data/skills";
-import { sectionIndex } from "@/lib/section-order";
 import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/motion/reveal";
 import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
@@ -8,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 export function Skills() {
   return (
     <Reveal id="skills" className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
-      <SectionHeading index={sectionIndex("skills")} eyebrow="Toolbox" title="Skills" />
+      <SectionHeading title="Skills" />
 
       <StaggerGroup viewport className="flex flex-col gap-5">
         {skills.map((group) => (

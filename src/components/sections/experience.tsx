@@ -1,5 +1,4 @@
 import { experience } from "@/lib/data/experience";
-import { sectionIndex } from "@/lib/section-order";
 import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/motion/reveal";
 import { StaggerGroup, StaggerItem } from "@/components/motion/stagger";
@@ -9,11 +8,7 @@ import { Badge } from "@/components/ui/badge";
 export function Experience() {
   return (
     <Reveal id="experience" className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
-      <SectionHeading
-        index={sectionIndex("experience")}
-        eyebrow="Career"
-        title="Work Experience"
-      />
+      <SectionHeading title="Work Experience" />
 
       <StaggerGroup viewport className="flex flex-col gap-6">
         {experience.map((job) => (

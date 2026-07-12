@@ -5,8 +5,8 @@ export interface SectionMeta {
   label: string;
 }
 
-// Canonical page order below the hero. Events is conditional so indices
-// (and the nav) never skip a number when it's empty.
+// Canonical page order below the hero. Events is conditional so the nav
+// doesn't show it (or leave a gap) when it's empty.
 export const allSections: SectionMeta[] = [
   { id: "resume", label: "Resume" },
   { id: "experience", label: "Experience" },
@@ -17,7 +17,3 @@ export const allSections: SectionMeta[] = [
   { id: "education", label: "Education" },
   { id: "contact", label: "Contact" },
 ];
-
-export function sectionIndex(id: string): number {
-  return allSections.findIndex((section) => section.id === id) + 1;
-}

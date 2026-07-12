@@ -3,7 +3,6 @@ import { ExternalLink, Trophy } from "lucide-react";
 
 import { events } from "@/lib/data/events";
 import { imageExists } from "@/lib/image-exists";
-import { sectionIndex } from "@/lib/section-order";
 import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/motion/reveal";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -14,11 +13,7 @@ export function Events() {
 
   return (
     <Reveal id="events" className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
-      <SectionHeading
-        index={sectionIndex("events")}
-        eyebrow="Builder Mode"
-        title="Recent Events"
-      />
+      <SectionHeading title="Recent Events" />
 
       <div className="grid gap-6 sm:grid-cols-2">
         {events.map((event) => {

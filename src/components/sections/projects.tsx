@@ -1,6 +1,5 @@
 import { projects } from "@/lib/data/projects";
 import { imageExists } from "@/lib/image-exists";
-import { sectionIndex } from "@/lib/section-order";
 import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/motion/reveal";
 import { ProjectCarousel } from "@/components/sections/project-carousel";
@@ -13,11 +12,7 @@ export function Projects() {
 
   return (
     <Reveal id="projects" className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-      <SectionHeading
-        index={sectionIndex("projects")}
-        eyebrow="Selected Work"
-        title="Projects"
-      />
+      <SectionHeading title="Projects" />
       <ProjectCarousel projects={items} />
     </Reveal>
   );
