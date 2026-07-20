@@ -19,10 +19,9 @@ export const events: Event[] = [
     date: "Nov 2025",
     location: "Richardson, TX",
     image: "/images/events/hackutd.png",
-    // TODO: replace this with what you actually built, your team size, and
-    // any result — the GitHub link below points at your HackUTD-2025 repo.
+    project: "Location Discovery Platform",
     description:
-      "UT Dallas's flagship student hackathon, and North America's largest 24-hour hackathon. Details on what I built here coming soon.",
+      "At UT Dallas's flagship 24-hour hackathon, built a location-discovery platform with a team of four that scrapes TikTok and Instagram for trending places, uses AI to interpret natural-language search and generate location descriptions, and runs geospatial search over PostgreSQL/PostGIS.",
     links: [
       { label: "GitHub", url: "https://github.com/arsalan5shaik/HackUTD-2025" },
     ],
