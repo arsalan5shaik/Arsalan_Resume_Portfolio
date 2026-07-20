@@ -26,4 +26,13 @@ export const events: Event[] = [
       { label: "GitHub", url: "https://github.com/arsalan5shaik/HackUTD-2025" },
     ],
   },
+  {
+    name: "OpenAI Hackathon",
+    type: "Hackathon",
+    // TODO: fill in the real details — date, location, what you built, team
+    // size, any result, and add an image at public/images/events/openai.png
+    // plus a GitHub/Devpost link if you have one.
+    description:
+      "Participated in OpenAI's hackathon. Project details coming soon.",
+  },
 ];

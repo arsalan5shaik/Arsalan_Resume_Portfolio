@@ -34,11 +34,19 @@ export function useCarousel(itemCount: number) {
     const atStart = x <= EDGE;
     const atEnd = maxScroll <= EDGE || x >= maxScroll - EDGE;
 
-    let leftmost = 0;
-    Array.from(el.children).forEach((child, i) => {
-      if ((child as HTMLElement).offsetLeft <= x + EDGE) leftmost = i;
-    });
-    const activeIndex = atEnd ? itemCount - 1 : leftmost;
+    // Active = the leftmost fully-visible card (first card at or past the
+    // viewport's left edge). We deliberately don't force this to the last
+    // index at the end: with several cards visible the final view shows the
+    // last two cards together, so forcing "last" made the counter jump (e.g.
+    // 03 -> 05, skipping 04). Leftmost-visible steps 1,2,3,4 without skipping.
+    const kids = Array.from(el.children) as HTMLElement[];
+    let activeIndex = itemCount - 1;
+    for (let i = 0; i < kids.length; i++) {
+      if (kids[i].offsetLeft >= x - EDGE) {
+        activeIndex = i;
+        break;
+      }
+    }
 
     setState((prev) =>
       prev.activeIndex === activeIndex && prev.atStart === atStart && prev.atEnd === atEnd
