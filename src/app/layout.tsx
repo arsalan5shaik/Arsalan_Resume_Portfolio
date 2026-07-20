@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 import { profile } from "@/lib/data/profile";
@@ -77,6 +78,7 @@ export default function RootLayout({
           </main>
           <Footer />
         </TooltipProvider>
+        <Analytics />
       </body>
     </html>
   );
