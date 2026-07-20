@@ -25,7 +25,7 @@ export function Education() {
                   alt={education.school}
                   width={40}
                   height={40}
-                  className="rounded-md object-contain"
+                  className="size-full rounded-md object-contain p-0.5"
                 />
               ) : (
                 <GraduationCap className="size-5 text-primary" />
