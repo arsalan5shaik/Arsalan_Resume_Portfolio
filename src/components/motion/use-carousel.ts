@@ -2,78 +2,98 @@
 
 import * as React from "react";
 
-// Each card's *achievable* scroll target — offsetLeft clamped to the track's
-// actual max scrollLeft. With a wide peek and few cards, the browser can't
-// scroll far enough right to reach the last card's raw offsetLeft, so
-// comparing against unclamped values picks the wrong "closest" card once
-// scrollLeft is pinned at the end.
-function cardScrollTargets(track: HTMLElement): number[] {
-  const maxScroll = track.scrollWidth - track.clientWidth;
-  return Array.from(track.children).map((child) =>
-    Math.min((child as HTMLElement).offsetLeft, maxScroll)
-  );
+const EDGE = 2; // px tolerance for treating a scroll position as an edge
+
+interface CarouselState {
+  activeIndex: number; // leftmost card in view (forced to last at the end)
+  atStart: boolean;
+  atEnd: boolean;
 }
 
-function closestCardIndex(track: HTMLElement): number {
-  const targets = cardScrollTargets(track);
-  let closest = 0;
-  let minDist = Infinity;
-  targets.forEach((target, i) => {
-    const dist = Math.abs(target - track.scrollLeft);
-    if (dist < minDist) {
-      minDist = dist;
-      closest = i;
-    }
-  });
-  return closest;
-}
-
-// Shared behavior behind every horizontal drag/arrow/keyboard carousel on
-// the site (Projects, Events, ...): scroll tracking, click-drag-to-pan for
-// mouse, and keyboard arrow navigation, all snapping to each card's real
-// position rather than an assumed uniform width.
+// Shared behavior behind every horizontal drag/arrow/keyboard carousel on the
+// site (Projects, Events, ...). Navigation is *position*-based, not index-based:
+// with several cards visible at once the trailing cards all share the same
+// end-scroll position, so "go to card N" math breaks down. Instead prev/next
+// step to the nearest card edge in each direction and clamp to the real scroll
+// bounds, which stays correct no matter how many cards are visible.
 export function useCarousel(itemCount: number) {
   const trackRef = React.useRef<HTMLDivElement>(null);
   const dragState = React.useRef<{ startX: number; startScroll: number } | null>(null);
-  const [activeIndex, setActiveIndex] = React.useState(0);
   const [dragging, setDragging] = React.useState(false);
+  const [state, setState] = React.useState<CarouselState>({
+    activeIndex: 0,
+    atStart: true,
+    atEnd: itemCount <= 1,
+  });
 
-  const scrollToIndex = React.useCallback(
-    (index: number) => {
-      const track = trackRef.current;
-      if (!track) return;
-      const clamped = Math.max(0, Math.min(index, itemCount - 1));
-      const targets = cardScrollTargets(track);
-      track.scrollTo({ left: targets[clamped], behavior: "smooth" });
-    },
-    [itemCount]
-  );
+  const measure = React.useCallback(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    const maxScroll = el.scrollWidth - el.clientWidth;
+    const x = el.scrollLeft;
+    const atStart = x <= EDGE;
+    const atEnd = maxScroll <= EDGE || x >= maxScroll - EDGE;
+
+    let leftmost = 0;
+    Array.from(el.children).forEach((child, i) => {
+      if ((child as HTMLElement).offsetLeft <= x + EDGE) leftmost = i;
+    });
+    const activeIndex = atEnd ? itemCount - 1 : leftmost;
+
+    setState((prev) =>
+      prev.activeIndex === activeIndex && prev.atStart === atStart && prev.atEnd === atEnd
+        ? prev
+        : { activeIndex, atStart, atEnd }
+    );
+  }, [itemCount]);
 
   React.useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
     let ticking = false;
 
-    function updateActive() {
-      ticking = false;
-      const el = trackRef.current;
-      if (!el) return;
-      setActiveIndex(closestCardIndex(el));
-    }
-
     function onScroll() {
       if (!ticking) {
         ticking = true;
-        requestAnimationFrame(updateActive);
+        requestAnimationFrame(() => {
+          ticking = false;
+          measure();
+        });
       }
     }
 
-    const initialFrame = requestAnimationFrame(updateActive);
+    const initialFrame = requestAnimationFrame(measure);
     track.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", measure);
     return () => {
       cancelAnimationFrame(initialFrame);
       track.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", measure);
     };
+  }, [measure]);
+
+  const next = React.useCallback(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    const maxScroll = el.scrollWidth - el.clientWidth;
+    const x = el.scrollLeft;
+    const nextCard = Array.from(el.children).find(
+      (c) => (c as HTMLElement).offsetLeft > x + EDGE
+    ) as HTMLElement | undefined;
+    const target = nextCard ? Math.min(nextCard.offsetLeft, maxScroll) : maxScroll;
+    el.scrollTo({ left: target, behavior: "smooth" });
+  }, []);
+
+  const prev = React.useCallback(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    let target = 0;
+    const x = el.scrollLeft;
+    Array.from(el.children).forEach((c) => {
+      const left = (c as HTMLElement).offsetLeft;
+      if (left < x - EDGE) target = left;
+    });
+    el.scrollTo({ left: Math.max(0, target), behavior: "smooth" });
   }, []);
 
   function onPointerDown(e: React.PointerEvent<HTMLDivElement>) {
@@ -100,18 +120,21 @@ export function useCarousel(itemCount: number) {
   function onKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
     if (e.key === "ArrowRight") {
       e.preventDefault();
-      scrollToIndex(activeIndex + 1);
+      next();
     } else if (e.key === "ArrowLeft") {
       e.preventDefault();
-      scrollToIndex(activeIndex - 1);
+      prev();
     }
   }
 
   return {
     trackRef,
-    activeIndex,
     dragging,
-    scrollToIndex,
+    activeIndex: state.activeIndex,
+    atStart: state.atStart,
+    atEnd: state.atEnd,
+    next,
+    prev,
     trackHandlers: {
       onPointerDown,
       onPointerMove,

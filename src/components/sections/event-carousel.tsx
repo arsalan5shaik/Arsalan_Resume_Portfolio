@@ -13,9 +13,8 @@ import { cn } from "@/lib/utils";
 export type CarouselEvent = Event & { hasImage: boolean };
 
 export function EventCarousel({ events }: { events: CarouselEvent[] }) {
-  const { trackRef, activeIndex, dragging, scrollToIndex, trackHandlers } = useCarousel(
-    events.length
-  );
+  const { trackRef, activeIndex, atStart, atEnd, dragging, next, prev, trackHandlers } =
+    useCarousel(events.length);
 
   return (
     <div>
@@ -26,7 +25,7 @@ export function EventCarousel({ events }: { events: CarouselEvent[] }) {
         tabIndex={0}
         {...trackHandlers}
         className={cn(
-          "relative flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2 sm:max-w-xl lg:max-w-2xl [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden",
+          "relative flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden",
           dragging ? "cursor-grabbing select-none scroll-auto" : "cursor-grab scroll-smooth"
         )}
       >
@@ -107,8 +106,10 @@ export function EventCarousel({ events }: { events: CarouselEvent[] }) {
       <CarouselControls
         activeIndex={activeIndex}
         total={events.length}
-        onPrev={() => scrollToIndex(activeIndex - 1)}
-        onNext={() => scrollToIndex(activeIndex + 1)}
+        atStart={atStart}
+        atEnd={atEnd}
+        onPrev={prev}
+        onNext={next}
         prevLabel="Previous event"
         nextLabel="Next event"
       />

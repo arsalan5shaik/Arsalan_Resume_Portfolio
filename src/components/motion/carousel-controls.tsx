@@ -5,6 +5,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 export function CarouselControls({
   activeIndex,
   total,
+  atStart,
+  atEnd,
   onPrev,
   onNext,
   prevLabel = "Previous",
@@ -12,6 +14,8 @@ export function CarouselControls({
 }: {
   activeIndex: number;
   total: number;
+  atStart: boolean;
+  atEnd: boolean;
   onPrev: () => void;
   onNext: () => void;
   prevLabel?: string;
@@ -24,7 +28,7 @@ export function CarouselControls({
           type="button"
           aria-label={prevLabel}
           onClick={onPrev}
-          disabled={activeIndex === 0}
+          disabled={atStart}
           className="flex size-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-primary/30 hover:text-primary disabled:pointer-events-none disabled:opacity-30"
         >
           <ChevronLeft className="size-4" />
@@ -33,7 +37,7 @@ export function CarouselControls({
           type="button"
           aria-label={nextLabel}
           onClick={onNext}
-          disabled={activeIndex === total - 1}
+          disabled={atEnd}
           className="flex size-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-primary/30 hover:text-primary disabled:pointer-events-none disabled:opacity-30"
         >
           <ChevronRight className="size-4" />
