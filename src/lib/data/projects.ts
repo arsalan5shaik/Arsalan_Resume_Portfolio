@@ -25,6 +25,7 @@ export const projects: Project[] = [
       "Tkinter",
     ],
     image: "/images/projects/traffic-sign-recognition.png",
+    repoUrl: "https://github.com/arsalan5shaik/Traffic-Sign-Classification",
     featured: true,
     stat: { value: "95%", label: "classification accuracy" },
   },
@@ -47,6 +48,7 @@ export const projects: Project[] = [
       "System Monitoring",
     ],
     image: "/images/projects/restaurant-recommendation-app.png",
+    repoUrl: "https://github.com/arsalan5shaik/Restaurant-Recommendation",
     featured: true,
   },
 ];

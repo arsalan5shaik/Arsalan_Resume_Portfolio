@@ -16,11 +16,15 @@ export const events: Event[] = [
   {
     name: "HackUTD",
     type: "Hackathon",
+    date: "Nov 2025",
     location: "Richardson, TX",
     image: "/images/events/hackutd.png",
-    // TODO: fill in the year, what you built, team size, and any result —
-    // placeholder for now so the section renders.
+    // TODO: replace this with what you actually built, your team size, and
+    // any result — the GitHub link below points at your HackUTD-2025 repo.
     description:
-      "UT Dallas's flagship student hackathon. Details on what I built here coming soon.",
+      "UT Dallas's flagship student hackathon, and North America's largest 24-hour hackathon. Details on what I built here coming soon.",
+    links: [
+      { label: "GitHub", url: "https://github.com/arsalan5shaik/HackUTD-2025" },
+    ],
   },
 ];
