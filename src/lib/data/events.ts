@@ -27,12 +27,17 @@ export const events: Event[] = [
     ],
   },
   {
-    name: "OpenAI Hackathon",
+    name: "OpenAI Build Week",
     type: "Hackathon",
-    // TODO: fill in the real details — date, location, what you built, team
-    // size, any result, and add an image at public/images/events/openai.png
-    // plus a GitHub/Devpost link if you have one.
+    date: "Jul 2026",
+    location: "Online",
+    image: "/images/events/openai.png",
+    project: "ScreenGuide",
     description:
-      "Participated in OpenAI's hackathon. Project details coming soon.",
+      "Built ScreenGuide — a screen-aware AI teaching companion that sees your screen, talks to you, and points you through tasks — for OpenAI Build Week, OpenAI's global online hackathon on Devpost.",
+    links: [
+      { label: "Devpost", url: "https://openai.devpost.com" },
+      { label: "GitHub", url: "https://github.com/arsalan5shaik/ScreenGuide" },
+    ],
   },
 ];

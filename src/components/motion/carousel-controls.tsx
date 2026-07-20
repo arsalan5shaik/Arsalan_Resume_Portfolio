@@ -48,7 +48,7 @@ export function CarouselControls({
         <div className="h-1 flex-1 overflow-hidden rounded-full bg-muted">
           <div
             className="h-full rounded-full bg-primary transition-[width] duration-300 ease-out"
-            style={{ width: `${atEnd ? 100 : ((activeIndex + 1) / total) * 100}%` }}
+            style={{ width: `${((activeIndex + 1) / total) * 100}%` }}
           />
         </div>
         <p className="shrink-0 font-mono text-xs tabular-nums text-muted-foreground">
